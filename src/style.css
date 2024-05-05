@@ -1,0 +1,24 @@
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    margin: 0;
+}
+
+.deck {
+    display: flex;
+    flex-direction: row;
+    row-gap: 1rem;
+    column-gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}

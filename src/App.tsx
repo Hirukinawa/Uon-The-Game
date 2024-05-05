@@ -1,34 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react';
+import { Game } from './model/Game';
+import "./style.css";
+import { Player } from './model/Player';
+import { ICarta } from './model/Carta';
+import Carta from './view/Carta';
+import baralho from './model/Baralho';
+
+export function getRandomInt (min: number, max: number): number {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [players, setPlayers] = useState<Player[]>([{id: 0, cards: baralho, comprar: () => {}}]);
+  const [actualPlayer, setActualPlayer] = useState(new Player(0, baralho));
+  const [game, setGame] = useState(new Game);
+
+  function printCartas(cards: ICarta[]) {
+    return cards.map((carta: ICarta) => {
+      return <Carta key={carta.id} id={carta.id} name={carta.name} color={carta.color} power={carta.power}></Carta>
+    })
+  }
+
+  useEffect(() => {
+    setPlayers(game.gameStart(players, actualPlayer));
+  }, []);
+
+  useEffect(() => {
+    setActualPlayer(players[0]);
+  },[players]);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <section>
+      <h1>Uon</h1>
+      <h2>The Game</h2>
+      <h3>Cartas:</h3>
+      <div className='deck'>
+        {players[0].cards.length > 1 ? printCartas(players[0].cards) : printCartas(baralho)}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </section>
   )
 }
 
