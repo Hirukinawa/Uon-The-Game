@@ -34,12 +34,18 @@ function App() {
       <h1>Uon</h1>
       <h2>The Game</h2>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <button><a href="/Uon.tsx">COMEÇAR</a></button>
 =======
+=======
+>>>>>>> parent of 9231192 (v3 - Adicionado Router Dom)
       <h3>Cartas:</h3>
       <div className='deck'>
         {players[0].cards.length > 1 ? printCartas(players[0].cards) : printCartas(baralho)}
       </div>
+<<<<<<< HEAD
+>>>>>>> parent of 9231192 (v3 - Adicionado Router Dom)
+=======
 >>>>>>> parent of 9231192 (v3 - Adicionado Router Dom)
     </section>
   )
