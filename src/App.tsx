@@ -12,7 +12,7 @@ function App() {
     <section>
       <h1>Uon</h1>
       <h2>The Game</h2>
-      <button><a href="./Uon.tsx">COMEÇAR</a></button>
+      <button><a href="/Uon.tsx">COMEÇAR</a></button>
     </section>
   )
 }
