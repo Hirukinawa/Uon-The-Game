@@ -1,5 +1,5 @@
 import { ICarta } from "../model/Carta";
-import "./Carta.css";
+import "../styles/Carta.css";
 
 export default function Carta(card: ICarta) {
     return (

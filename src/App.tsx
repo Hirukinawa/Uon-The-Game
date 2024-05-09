@@ -1,8 +1,5 @@
-import "./style.css";
-
-export function getRandomInt (min: number, max: number): number {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+import "./styles/style.css";
+import "./styles/App.css";
 
 function App() {
 
@@ -16,7 +13,7 @@ function App() {
     <section>
       <h1>Uon</h1>
       <h2>The Game</h2>
-      <button><a href="/Uon.tsx">COMEÇAR</a></button>
+      <button><a href="/uon">COMEÇAR</a></button>
     </section>
   )
 }

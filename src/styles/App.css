@@ -1,0 +1,26 @@
+@keyframes growAndShrink {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+button {
+    animation: growAndShrink 2.5s infinite;
+    border: .5rem rgb(247, 247, 27) solid;
+    background-color: red;
+    border-radius: 4px;
+    padding: .5rem;
+}
+
+button a {
+    font-size: 2rem;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+}
