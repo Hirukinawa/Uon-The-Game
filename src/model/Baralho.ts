@@ -315,6 +315,7 @@ const baralho: ICarta[] = [
                 jogador.comprar();
             }
             actual_Color = cor;
+            console.log(actual_Color)
             return true;
         },
     },
@@ -324,6 +325,7 @@ const baralho: ICarta[] = [
         color: "black",
         power: (actual_Color: string, cor: string) => {
             actual_Color = cor;
+            console.log(actual_Color)
             return true;
         },
     },
