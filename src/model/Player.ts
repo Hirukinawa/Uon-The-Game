@@ -11,7 +11,24 @@ export class Player {
         this.cards = cards;
     }
 
-    comprar(cards: ICarta[]) {
-        cards.push(baralho[getRandomInt(1, baralho.length) - 1])
+    comprar() {
+        this.cards.push(baralho[getRandomInt(1, baralho.length) - 1])
+    }
+
+    podeJogar(lastCard: ICarta, cartaJogador: ICarta): boolean {
+        if ((cartaJogador.name === lastCard.name) || (cartaJogador.color === lastCard.color || cartaJogador.color === "black")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    jogar(carta: ICarta) {
+        var index = this.cards.findIndex(card => card.id === carta.id);
+        if (index !== -1) {
+            var novoBaralho = [...this.cards];
+            novoBaralho.splice(index, 1);
+            this.cards = novoBaralho;
+        }
     }
 }

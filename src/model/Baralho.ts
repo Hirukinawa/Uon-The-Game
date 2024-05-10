@@ -56,7 +56,7 @@ const baralho: ICarta[] = [
         color: "red",
         power: (jogador: Player) => {
             for (let i = 0; i < 2; i++) {
-                jogador.comprar(jogador.cards);
+                jogador.comprar();
             }
             return true;
         },
@@ -132,7 +132,7 @@ const baralho: ICarta[] = [
         color: "green",
         power: (jogador: Player) => {
             for (let i = 0; i < 2; i++) {
-                jogador.comprar(jogador.cards);
+                jogador.comprar();
             }
             return true;
         },
@@ -208,7 +208,7 @@ const baralho: ICarta[] = [
         color: "blue",
         power: (jogador: Player) => {
             for (let i = 0; i < 2; i++) {
-                jogador.comprar(jogador.cards);
+                jogador.comprar();
             }
             return true;
         },
@@ -284,7 +284,7 @@ const baralho: ICarta[] = [
         color: "yellow",
         power: (jogador: Player) => {
             for (let i = 0; i < 2; i++) {
-                jogador.comprar(jogador.cards);
+                jogador.comprar();
             }
             return true;
         },
@@ -312,7 +312,7 @@ const baralho: ICarta[] = [
         color: "black",
         power: (jogador: Player, actual_Color: string, cor: string) => {
             for (let i = 0; i < 4; i++) {
-                jogador.comprar(jogador.cards);
+                jogador.comprar();
             }
             actual_Color = cor;
             return true;

@@ -14,7 +14,7 @@ export class Game {
 
     distribuiCartas(): ICarta[] {
         let cartas: ICarta[] = [];
-        for (let i:number = 0; i < 9; i++) {
+        for (let i:number = 0; i < 7; i++) {
             cartas.push(baralho[getRandomInt(1, baralho.length) - 1]);
         }
         return cartas;
