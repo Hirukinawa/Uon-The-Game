@@ -6,12 +6,21 @@
     width: 8rem;
     height: 15rem;
     border-radius: 2rem;
-    border: 2px black solid;
+    overflow: hidden;
+    border: 4px rgb(231, 231, 231) solid;
 }
 
 .cards:hover {
-    transform: scale(1.1);
-    transition: 0.2s;
+    transform: scale(1.15);
+    transition: 0.3s;
+}
+
+.cards h1 {
+    color: white;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    font-size: 3rem;
+    transform: rotate(-45deg);
 }
 
 .content {
@@ -19,7 +28,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 6rem;
-    border-radius: 2rem;
-    background-color: white;
+    transform: rotate(45deg);
+    width: 120%;
+    height: 120%;
+    border-radius: 50%;
+    border: 8px white solid;
 }

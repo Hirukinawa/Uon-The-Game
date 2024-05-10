@@ -1,16 +1,14 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
 section {
+    background-color: rgba(185, 41, 41, 0.514);
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-}
-
-h1 {
-    font-size: 2.5rem;
-}
-
-h2 {
-    margin: 0;
+    justify-content: center;
 }
 
 .deck {

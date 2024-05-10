@@ -1,4 +1,4 @@
-import { getRandomInt } from "../App";
+import { getRandomInt } from "../service/functions";
 import baralho from "./Baralho";
 import { ICarta } from "./Carta";
 

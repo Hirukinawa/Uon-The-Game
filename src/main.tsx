@@ -1,20 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider} from 'react-router-dom';
-import App from './App';
+import App from "./App";
 import Uon from './pages/Uon';
 
-const router = createBrowserRouter(
-  [
-    {
-      path: '/',
-      element: <App />
-    },
-    {
-      path: "/uon",
-      element: <Uon />
-    }
-  ]);
+export const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+  },
+  {
+    path: '/uon/:numberOfPlayers',
+    element: <Uon />,
+  }
+]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
