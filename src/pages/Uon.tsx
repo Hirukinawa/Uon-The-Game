@@ -18,17 +18,66 @@ const Uon: React.FC = () => {
 
     const [game] = useState<Game>(new Game(numberPlayers));
     const [players, setPlayers] = useState<Player[]>([playerModel]);
+    const [auxPlayers, setAuxPlayers] = useState<Player[]>(players);
     const [lastCard, setLastCard] = useState<ICarta>(baralho[getRandomInt(1, baralho.length - 2) - 1])
 
     useEffect(() => {
-        setPlayers(game.gameStart())
+        const arrayDePlayers:Player[] = game.gameStart();
+        setPlayers(arrayDePlayers);
+        setAuxPlayers(arrayDePlayers);
     }, []);
+
+    useEffect(() => {
+        if (auxPlayers.length > 0 && auxPlayers[0].id !== 0 && auxPlayers[0].id !== 1) {
+            const timer = setTimeout(() => {
+                jogadaDosAdversarios();
+            }, 1000);
+            return () => clearTimeout(timer);
+        }
+    }, [auxPlayers]);
+
+    function passaParaOProximo(jogadores: Player[]) {
+        const firstPlayer:Player = jogadores[0]
+        const newPlayers:Player[] = [...jogadores];
+        newPlayers.splice(0,1);
+        newPlayers.push(firstPlayer);
+        setAuxPlayers(newPlayers);
+        console.log("Passou")
+    }
+
+    async function awaitForNextPlay() {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+
+    async function jogadaDosAdversarios() {
+
+        if (auxPlayers[0].id !== 1 && auxPlayers[0].id !== 0) {
+
+            const jogadorAtual = auxPlayers[0];
+            console.log(`Vez do jogador: ${jogadorAtual.id}`)
+
+            for (let i:number = 0; i < jogadorAtual.cards.length; i++) {
+                if (jogadorAtual.podeJogar(lastCard, jogadorAtual.cards[i])) {
+                    setLastCard(jogadorAtual.cards[i]);
+                    jogadorAtual.jogar(jogadorAtual.cards[i])
+                } else {
+                    jogadorAtual.comprar();
+                }
+            }
+
+            passaParaOProximo(auxPlayers);
+
+            await awaitForNextPlay();
+
+        }
+
+    }
 
     function checaJogada(jogador: Player, carta: ICarta) {
         if (jogador.podeJogar(lastCard, carta)) {
             jogador.jogar(carta);
+            passaParaOProximo(auxPlayers)
             setLastCard(carta);
-            console.log(jogador.podeJogar(lastCard, carta))
         } else {
             alert("Esta carta não pode ser jogada agora!");
         }
@@ -41,13 +90,27 @@ const Uon: React.FC = () => {
         })
     }
 
+    const printaInimigos = players.map((player:Player, index) => {
+            if (index != 0) {
+                return <div className="row"><h2>Jogador {player.id}</h2><h3>Cartas: {player.cards.length}</h3></div>
+            }
+        }
+    )
+
     return (
         <div className="uon">
             <h1>Última carta:</h1>
-            <div className="deck">
-                {printCartas([lastCard])}
+            <div className="row">
+                <h1>Vez do jogador {auxPlayers[0].id}</h1>
+                <div className="deck">
+                    {printCartas([lastCard])}
+                </div>
+                <div className="column">
+                    <h1>Adversários:</h1>
+                    {printaInimigos}
+                </div>
             </div>
-            <h1>Cartas do jogador:</h1>
+            <h1>Suas cartas:</h1>
             <div className="row">
                 <div className="deck">
                     {printCartas(players[0].cards)}

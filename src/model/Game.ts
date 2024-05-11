@@ -24,7 +24,7 @@ export class Game {
         var players: Player[] = [];
 
         for (let i = 0; i < this.numberOfPlayers; i++) {
-            players.push(new Player(i + 2, this.distribuiCartas()));
+            players.push(new Player(i + 1, this.distribuiCartas()));
         }
         return players;
     }
