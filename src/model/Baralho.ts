@@ -1,6 +1,14 @@
 import { Player } from "./Player";
 import { ICarta } from "./Carta";
 
+export function block(players:Player[]):Player[] {
+    const firstPlayer = players.shift(); // Remove o primeiro jogador e armazena
+    const secondPlayer = players.shift(); // Remove o segundo jogador e armazena
+    players.unshift(firstPlayer!, secondPlayer!); // Adiciona de volta na ordem inversa
+    return players;
+}
+
+
 const baralho: ICarta[] = [
     {
         id: 1,
@@ -54,19 +62,19 @@ const baralho: ICarta[] = [
         id: 9,
         name: "+2",
         color: "red",
-        power: (jogador: Player) => {
+        power: (players: Player[]) => {
             for (let i = 0; i < 2; i++) {
-                jogador.comprar();
+                players[1].comprar();
             }
-            return true;
+            return block(players);
         },
     },
     {
         id: 10,
         name: "block",
         color: "red",
-        power: () => {
-            return true;
+        power: (players:Player[]) => {
+            return block(players);
         },
     },
     {
@@ -74,8 +82,12 @@ const baralho: ICarta[] = [
         name: "reverse",
         color: "red",
         power: (players: Player[]) => {
-            players = players.reverse();
-            return true;
+
+            const jogadorAtual:Player | undefined = players.shift();
+            players.reverse()
+            players.unshift(jogadorAtual!)
+
+            return players;
         },
     },
     {
@@ -130,19 +142,19 @@ const baralho: ICarta[] = [
         id: 20,
         name: "+2",
         color: "green",
-        power: (jogador: Player) => {
+        power: (players: Player[]) => {
             for (let i = 0; i < 2; i++) {
-                jogador.comprar();
+                players[1].comprar();
             }
-            return true;
+            return block(players);
         },
     },
     {
         id: 21,
         name: "block",
         color: "green",
-        power: () => {
-            return true;
+        power: (players:Player[]) => {
+            return block(players);
         },
     },
     {
@@ -150,8 +162,12 @@ const baralho: ICarta[] = [
         name: "reverse",
         color: "green",
         power: (players: Player[]) => {
-            players = players.reverse();
-            return true;
+
+            const jogadorAtual:Player | undefined = players.shift();
+            players.reverse()
+            players.unshift(jogadorAtual!)
+
+            return players;
         },
     },
     {
@@ -206,19 +222,19 @@ const baralho: ICarta[] = [
         id: 31,
         name: "+2",
         color: "blue",
-        power: (jogador: Player) => {
+        power: (players: Player[]) => {
             for (let i = 0; i < 2; i++) {
-                jogador.comprar();
+                players[1].comprar();
             }
-            return true;
+            return block(players);
         },
     },
     {
         id: 32,
         name: "block",
         color: "blue",
-        power: () => {
-            return true;
+        power: (players:Player[]) => {
+            return block(players);
         },
     },
     {
@@ -226,8 +242,12 @@ const baralho: ICarta[] = [
         name: "reverse",
         color: "blue",
         power: (players: Player[]) => {
-            players = players.reverse();
-            return true;
+
+            const jogadorAtual:Player | undefined = players.shift();
+            players.reverse()
+            players.unshift(jogadorAtual!)
+
+            return players;
         },
     },
     {
@@ -282,19 +302,19 @@ const baralho: ICarta[] = [
         id: 42,
         name: "+2",
         color: "yellow",
-        power: (jogador: Player) => {
+        power: (players: Player[]) => {
             for (let i = 0; i < 2; i++) {
-                jogador.comprar();
+                players[1].comprar()
             }
-            return true;
+            return block(players);
         },
     },
     {
         id: 43,
         name: "block",
         color: "yellow",
-        power: () => {
-            return true;
+        power: (players:Player[]) => {
+            return block(players);
         },
     },
     {
@@ -302,30 +322,32 @@ const baralho: ICarta[] = [
         name: "reverse",
         color: "yellow",
         power: (players: Player[]) => {
-            players = players.reverse();
-            return true;
+
+            const jogadorAtual:Player | undefined = players.shift();
+            players.reverse()
+            players.unshift(jogadorAtual!)
+
+            return players;
         },
     },
     {
         id: 45,
         name: "+4",
         color: "black",
-        power: (jogador: Player, actual_Color: string, cor: string) => {
+        power: (players: Player[], carta: ICarta, cor: string) => {
+            carta.color = cor;
             for (let i = 0; i < 4; i++) {
-                jogador.comprar();
+                players[1].comprar();
             }
-            actual_Color = cor;
-            console.log(actual_Color)
-            return true;
+            return block(players);
         },
     },
     {
         id: 46,
         name: "change_color",
         color: "black",
-        power: (actual_Color: string, cor: string) => {
-            actual_Color = cor;
-            console.log(actual_Color)
+        power: (carta: ICarta, cor: string) => {
+            carta.color = cor;
             return true;
         },
     },

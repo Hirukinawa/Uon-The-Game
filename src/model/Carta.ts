@@ -3,5 +3,5 @@ export interface ICarta {
     id: number;
     name: string;
     color: string;
-    power(...itens: any[]): boolean;
+    power(...itens: any[]): any;
 }

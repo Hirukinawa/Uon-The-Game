@@ -11,8 +11,9 @@ export class Player {
         this.cards = cards;
     }
 
-    comprar() {
+    comprar():ICarta[] {
         this.cards.push(baralho[getRandomInt(1, baralho.length) - 1])
+        return this.cards;
     }
 
     podeJogar(lastCard: ICarta, cartaJogador: ICarta): boolean {
