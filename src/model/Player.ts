@@ -31,5 +31,6 @@ export class Player {
             novoBaralho.splice(index, 1);
             this.cards = novoBaralho;
         }
+        /* alert(`Jogador ${this.id} jogou ${carta.name} ${carta.color}`) */
     }
 }

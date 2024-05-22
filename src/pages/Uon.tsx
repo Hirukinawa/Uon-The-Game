@@ -40,66 +40,95 @@ const Uon: React.FC = () => {
     }, [auxPlayers]);
 
     function passaParaOProximo(jogadores: Player[]) {
-        const firstPlayer:Player = jogadores[0]
-        const newPlayers:Player[] = [...jogadores];
-        newPlayers.splice(0,1);
+        // Verificação para garantir que 'jogadores' é um array
+        if (!Array.isArray(jogadores)) {
+            console.error("Erro: 'jogadores' não é um array", jogadores);
+            return;
+        }
+    
+        // Verificação para garantir que 'jogadores' não está vazio
+        if (jogadores.length === 0) {
+            console.error("Erro: 'jogadores' está vazio");
+            return;
+        }
+    
+        const firstPlayer: Player = jogadores[0];
+    
+        // Verificação para garantir que 'firstPlayer' é um objeto válido
+        if (!firstPlayer || typeof firstPlayer.id !== 'number') {
+            console.error("Erro: 'firstPlayer' não é válido", firstPlayer);
+            return;
+        }
+    
+        // Filtra e adiciona o primeiro jogador ao final da lista
+        const newPlayers: Player[] = jogadores.filter((j: Player) => j.id !== firstPlayer.id);
         newPlayers.push(firstPlayer);
+    
         setAuxPlayers(newPlayers);
     }
+    
 
     async function awaitForNextPlay() {
         await new Promise(resolve => setTimeout(resolve, 1000));
     }
 
     function executaCarta(carta:ICarta): Player[] {
-        if (carta.name === "+4") {
-            if (auxPlayers[0].id === 1) {
-                carta.power(auxPlayers, carta, listaDeCores[getRandomInt(0, listaDeCores.length)]);
-            } else {
-                carta.power(auxPlayers, carta, listaDeCores[getRandomInt(0, listaDeCores.length)]);
+
+        let updatedPlayers:Player[] = [...auxPlayers];
+
+        try {
+            if (carta.name === "+4") {
+                if (auxPlayers[0].id === 1) {
+                    updatedPlayers = carta.power(auxPlayers, carta, "red");
+                } else {
+                    updatedPlayers = carta.power(auxPlayers, carta, "blue");
+                }
+            } else if (carta.name === "+2") {
+                updatedPlayers = carta.power(auxPlayers);
+            } else if (carta.name === "block") {
+                updatedPlayers = carta.power(auxPlayers)
+            } else if (carta.name === "reverse") {
+                updatedPlayers = carta.power(auxPlayers)
+            } else if (carta.name === "change_color") {
+                /* carta.color = listaDeCores[getRandomInt(0,listaDeCores.length)]; */
+                carta.power(carta, "blue");
             }
-            return carta.power(auxPlayers, carta, listaDeCores[getRandomInt(0, listaDeCores.length)]);;
-        } else if (carta.name === "+2") {
-            return carta.power(auxPlayers);
-        } else if (carta.name === "block") {
-            return carta.power(auxPlayers)
-        } else if (carta.name === "reverse") {
-            return carta.power(auxPlayers)
-        } else if (carta.name === "change_color") {
-            /* carta.color = listaDeCores[getRandomInt(0,listaDeCores.length)]; */
-            return carta.power(carta, listaDeCores[getRandomInt(0, listaDeCores.length)]);;
-        } else {
+        } catch (error) {
+            console.log("Erro ao executar a carta", error)
             return auxPlayers;
         }
+
+        return updatedPlayers;
+
     }
 
     async function jogadaDosAdversarios() {
 
         if (auxPlayers[0].id !== 1 && auxPlayers[0].id !== 0) {
 
-            const jogadorAtual = auxPlayers[0];
+            const jogador = auxPlayers[0];
 
             let temCarta:boolean = false;
 
-            while (temCarta === false) {
+            while (!temCarta) {
 
-                for (let i:number = 0; i < jogadorAtual.cards.length; i++) {
-                    if (jogadorAtual.podeJogar(lastCard, jogadorAtual.cards[i])) {
-                        setLastCard(jogadorAtual.cards[i]);
-                        jogadorAtual.jogar(jogadorAtual.cards[i])
-                        if (jogadorAtual.cards.length == 0) setWinner(jogadorAtual.id)
-                        /* executaCarta(jogadorAtual.cards[i]) */
-                        passaParaOProximo(executaCarta(jogadorAtual.cards[i]))
+                for (let i:number = 0; i < jogador.cards.length; i++) {
+                    if (jogador.podeJogar(lastCard, jogador.cards[i])) {
+
+
+                        jogador.jogar(jogador.cards[i]);
+                        if (jogador.cards.length == 0) setWinner(jogador.id)
+                        const updatedPlayers:Player[] = executaCarta(jogador.cards[i]);
+                        passaParaOProximo(updatedPlayers)
+                        setLastCard(jogador.cards[i]);
                         temCarta = true;
                         break
                     } else {
-                        jogadorAtual.comprar();
+                        jogador.comprar();
                     }
                 }
 
             }
-
-            /* passaParaOProximo(auxPlayers); */
 
             await awaitForNextPlay();
 
@@ -120,10 +149,8 @@ const Uon: React.FC = () => {
             if (jogador.podeJogar(lastCard, carta)) {
                 jogador.jogar(carta);
                 if (jogador.cards.length == 0) setWinner(jogador.id)
-                /* executaCarta(carta) */
                 passaParaOProximo(executaCarta(carta))
-                const last = carta;
-                setLastCard(last);
+                setLastCard(carta);
             } else {
                 alert("Esta carta não pode ser jogada agora!");
             }

@@ -63,9 +63,11 @@ const baralho: ICarta[] = [
         name: "+2",
         color: "red",
         power: (players: Player[]) => {
+            const nextPlayer:Player = players[1];
             for (let i = 0; i < 2; i++) {
-                players[1].comprar();
+                nextPlayer.comprar();
             }
+            players[1] = nextPlayer;
             return block(players);
         },
     },
@@ -143,9 +145,11 @@ const baralho: ICarta[] = [
         name: "+2",
         color: "green",
         power: (players: Player[]) => {
+            const nextPlayer:Player = players[1];
             for (let i = 0; i < 2; i++) {
-                players[1].comprar();
+                nextPlayer.comprar();
             }
+            players[1] = nextPlayer;
             return block(players);
         },
     },
@@ -223,9 +227,11 @@ const baralho: ICarta[] = [
         name: "+2",
         color: "blue",
         power: (players: Player[]) => {
+            const nextPlayer:Player = players[1];
             for (let i = 0; i < 2; i++) {
-                players[1].comprar();
+                nextPlayer.comprar();
             }
+            players[1] = nextPlayer;
             return block(players);
         },
     },
@@ -303,9 +309,11 @@ const baralho: ICarta[] = [
         name: "+2",
         color: "yellow",
         power: (players: Player[]) => {
+            const nextPlayer:Player = players[1];
             for (let i = 0; i < 2; i++) {
-                players[1].comprar()
+                nextPlayer.comprar();
             }
+            players[1] = nextPlayer;
             return block(players);
         },
     },
@@ -333,19 +341,21 @@ const baralho: ICarta[] = [
     {
         id: 45,
         name: "+4",
-        color: "black",
+        color: "red",
         power: (players: Player[], carta: ICarta, cor: string) => {
+            const nextPlayer:Player = players[1];
             carta.color = cor;
             for (let i = 0; i < 4; i++) {
-                players[1].comprar();
+                nextPlayer.comprar();
             }
+            players[1] = nextPlayer;
             return block(players);
         },
     },
     {
         id: 46,
         name: "change_color",
-        color: "black",
+        color: "red",
         power: (carta: ICarta, cor: string) => {
             carta.color = cor;
             return true;
