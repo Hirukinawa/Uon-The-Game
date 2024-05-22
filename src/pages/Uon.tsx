@@ -5,7 +5,7 @@ import { Player } from "../model/Player";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "../styles/Uon.css"
-import baralho, { block } from "../model/Baralho";
+import baralho from "../model/Baralho";
 import { getRandomInt } from "../service/functions";
 
 const Uon: React.FC = () => {
@@ -20,6 +20,7 @@ const Uon: React.FC = () => {
     const [players, setPlayers] = useState<Player[]>([playerModel]);
     const [auxPlayers, setAuxPlayers] = useState<Player[]>(players);
     const [lastCard, setLastCard] = useState<ICarta>(baralho[getRandomInt(1, baralho.length - 2) - 1]);
+    const [winner, setWinner] = useState<number>(-1);
 
     const listaDeCores = ["red", "green", "blue", "yellow"];
 
@@ -50,26 +51,26 @@ const Uon: React.FC = () => {
         await new Promise(resolve => setTimeout(resolve, 1000));
     }
 
-    function executaCarta(carta:ICarta) {
+    function executaCarta(carta:ICarta): Player[] {
         if (carta.name === "+4") {
             if (auxPlayers[0].id === 1) {
                 carta.power(auxPlayers, carta, listaDeCores[getRandomInt(0, listaDeCores.length)]);
             } else {
                 carta.power(auxPlayers, carta, listaDeCores[getRandomInt(0, listaDeCores.length)]);
             }
-            setAuxPlayers(block(auxPlayers))
+            return carta.power(auxPlayers, carta, listaDeCores[getRandomInt(0, listaDeCores.length)]);;
         } else if (carta.name === "+2") {
-            carta.power(auxPlayers)
-            setAuxPlayers(block(auxPlayers))
+            return carta.power(auxPlayers);
         } else if (carta.name === "block") {
-            setAuxPlayers(carta.power(auxPlayers))
+            return carta.power(auxPlayers)
         } else if (carta.name === "reverse") {
-            setAuxPlayers(carta.power(auxPlayers))
+            return carta.power(auxPlayers)
         } else if (carta.name === "change_color") {
-            carta.power(carta, listaDeCores[getRandomInt(0, listaDeCores.length)]);
-            carta.color = listaDeCores[getRandomInt(0,listaDeCores.length)];
+            /* carta.color = listaDeCores[getRandomInt(0,listaDeCores.length)]; */
+            return carta.power(carta, listaDeCores[getRandomInt(0, listaDeCores.length)]);;
+        } else {
+            return auxPlayers;
         }
-
     }
 
     async function jogadaDosAdversarios() {
@@ -86,7 +87,9 @@ const Uon: React.FC = () => {
                     if (jogadorAtual.podeJogar(lastCard, jogadorAtual.cards[i])) {
                         setLastCard(jogadorAtual.cards[i]);
                         jogadorAtual.jogar(jogadorAtual.cards[i])
-                        executaCarta(jogadorAtual.cards[i])
+                        if (jogadorAtual.cards.length == 0) setWinner(jogadorAtual.id)
+                        /* executaCarta(jogadorAtual.cards[i]) */
+                        passaParaOProximo(executaCarta(jogadorAtual.cards[i]))
                         temCarta = true;
                         break
                     } else {
@@ -96,7 +99,7 @@ const Uon: React.FC = () => {
 
             }
 
-            passaParaOProximo(auxPlayers);
+            /* passaParaOProximo(auxPlayers); */
 
             await awaitForNextPlay();
 
@@ -116,8 +119,9 @@ const Uon: React.FC = () => {
         if (auxPlayers[0].id === 1) {
             if (jogador.podeJogar(lastCard, carta)) {
                 jogador.jogar(carta);
-                executaCarta(carta)
-                passaParaOProximo(auxPlayers)
+                if (jogador.cards.length == 0) setWinner(jogador.id)
+                /* executaCarta(carta) */
+                passaParaOProximo(executaCarta(carta))
                 const last = carta;
                 setLastCard(last);
             } else {
@@ -139,31 +143,45 @@ const Uon: React.FC = () => {
         }
     )
 
+    function restart() {
+        location.reload();
+    }
+
+    function acabar() {
+        setWinner(1);
+    }
+
     const ordem = auxPlayers.map((pl, index) => <h4 key={index}>{pl.id}</h4>)
 
     return (
         <div className="uon">
-            <h1>Última carta:</h1>
-            <div className="row">
-                <div className="column">
-                    <h1>Vez do jogador {auxPlayers[0].id}</h1>
-                    {ordem}
-                </div>
-                <div className="deck">
-                    <Carta {...lastCard}></Carta>
-                </div>
-                <div className="column">
-                    <h1>Adversários:</h1>
-                    {printaInimigos}
-                </div>
+            {winner > 0
+            ? <div>
+                <h1>Jogador {winner} venceu</h1>
+                <button onClick={restart}>Recomeçar</button>
             </div>
-            <h1>Suas cartas:</h1>
-            <div className="row">
+            : <div className="uon">
+                <h1>Última carta:</h1>
+                <div className="row">
+                    <div className="column">
+                        <h1>Vez do jogador {auxPlayers[0].id}</h1>
+                        {ordem}
+                    </div>
+                    <div className="deck">
+                        <Carta {...lastCard}></Carta>
+                    </div>
+                    <div className="column">
+                        <h1>Adversários:</h1>
+                        {printaInimigos}
+                    </div>
+                </div>
+                <button onClick={compra} style={{marginLeft:"1rem"}}>COMPRAR</button>
+                <button onClick={acabar} style={{marginLeft:"1rem"}}>Acabar</button>
+                <h1>Suas cartas:</h1>
                 <div className="deck">
                     {printCartas(players[0].cards)}
                 </div>
-                <button onClick={compra} style={{alignSelf:"flex-start", marginLeft:"1rem"}}>COMPRAR</button>
-            </div>
+            </div>}
         </div>
     )
 

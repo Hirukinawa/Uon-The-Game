@@ -1,11 +1,11 @@
 import { Player } from "./Player";
 import { ICarta } from "./Carta";
 
-export function block(players:Player[]):Player[] {
-    const firstPlayer = players.shift(); // Remove o primeiro jogador e armazena
-    const secondPlayer = players.shift(); // Remove o segundo jogador e armazena
-    players.unshift(firstPlayer!, secondPlayer!); // Adiciona de volta na ordem inversa
-    return players;
+function block(players:Player[]): Player[] {
+    const firstPlayer:Player = players[0]
+    const playersList:Player[] = players.filter((p) => p.id !== firstPlayer.id)
+    playersList.push(firstPlayer)
+    return playersList;
 }
 
 
