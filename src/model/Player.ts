@@ -17,7 +17,7 @@ export class Player {
     }
 
     podeJogar(lastCard: ICarta, cartaJogador: ICarta): boolean {
-        if ((cartaJogador.name === lastCard.name) || (cartaJogador.color === lastCard.color || lastCard.color === "black")) {
+        if ((cartaJogador.name === lastCard.name) || (cartaJogador.color === lastCard.color || lastCard.color === "black" || cartaJogador.color === "black")) {
             return true;
         } else {
             return false;
