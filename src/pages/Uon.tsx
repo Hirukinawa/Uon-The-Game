@@ -3,7 +3,7 @@ import { ICarta } from "../model/Carta";
 import { Game } from "../model/Game";
 import { Player } from "../model/Player";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "../styles/Uon.css"
 import baralho from "../model/Baralho";
 import { getRandomInt } from "../service/functions";
@@ -11,6 +11,7 @@ import { getRandomInt } from "../service/functions";
 const Uon: React.FC = () => {
 
     const { numberOfPlayers } = useParams<{ numberOfPlayers: string }>();
+    const navigate = useNavigate();
     const nop = parseInt(numberOfPlayers || "4", 10);
     const numberPlayers:number = nop < 2 ? 2 : nop > 4 ? 4 : nop;
 
@@ -172,7 +173,8 @@ const Uon: React.FC = () => {
     )
 
     function restart() {
-        location.reload();
+        window.scrollTo(0, 0);
+        navigate(`/uon/${nop}`, { state: { numberOfPlayers } });
     }
 
     function acabar() {
