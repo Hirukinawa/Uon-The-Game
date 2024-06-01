@@ -341,7 +341,7 @@ const baralho: ICarta[] = [
     {
         id: 45,
         name: "+4",
-        color: "red",
+        color: "black",
         power: (players: Player[], carta: ICarta, cor: string) => {
             const nextPlayer:Player = players[1];
             carta.color = cor;
@@ -355,7 +355,7 @@ const baralho: ICarta[] = [
     {
         id: 46,
         name: "change_color",
-        color: "red",
+        color: "black",
         power: (carta: ICarta, cor: string) => {
             carta.color = cor;
             return true;
