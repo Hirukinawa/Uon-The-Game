@@ -23,6 +23,7 @@ const Uon: React.FC = () => {
     const [winner, setWinner] = useState<number>(-1);
 
     const listaDeCores = ["red", "green", "blue", "yellow"];
+    console.log(listaDeCores)
 
     useEffect(() => {
         const arrayDePlayers:Player[] = game.gameStart();
