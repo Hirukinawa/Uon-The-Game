@@ -1,5 +1,5 @@
 :root {
-    --unoShadow: -2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white,
+    --enemyShadow: -2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white,
     -4px -4px 0 black, 4px -4px 0 black, -4px 4px 0 black, 4px 4px 0 black;
 }
 
@@ -22,7 +22,7 @@
     font-size: 1.33em;
     font-family: Arial, sans-serif;
     color: rgb(247, 247, 27);
-    text-shadow: var(--unoShadow);
+    text-shadow: var(--enemyShadow);
     transform: rotate(-55deg);
     animation: none;
 }

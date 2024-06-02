@@ -84,26 +84,40 @@ const Uon: React.FC = () => {
         if (auxPlayers[0].id !== 1 && auxPlayers[0].id !== 0) {
             const jogador = auxPlayers[0];
             let temCarta: boolean = false;
-
-            while (!temCarta) {
-                for (let i = 0; i < jogador.cards.length; i++) {
-                    if (jogador.podeJogar(lastCard, jogador.cards[i])) {
-                        jogador.jogar(jogador.cards[i]);
-                        if (jogador.cards.length === 0) setWinner(jogador.id);
-                        const updatedPlayers: Player[] = executaCarta(jogador.cards[i]);
-                        passaParaOProximo(updatedPlayers);
-                        setLastCard(jogador.cards[i]);
-                        temCarta = true;
-                        break;
-                    } else {
-                        jogador.comprar();
-                    }
+    
+            // Tente encontrar uma carta que pode ser jogada
+            for (let i = 0; i < jogador.cards.length; i++) {
+                const carta: ICarta = jogador.cards[i];
+                if (jogador.podeJogar(lastCard, carta)) {
+                    jogador.jogar(carta);
+                    if (jogador.cards.length === 0) setWinner(jogador.id);
+                    const updatedPlayers: Player[] = executaCarta(carta);
+                    passaParaOProximo(updatedPlayers);
+                    setLastCard(carta);
+                    temCarta = true;
+                    break;
                 }
             }
-
+    
+            // Se nenhuma carta pode ser jogada, compre cartas até encontrar uma válida
+            while (!temCarta) {
+                jogador.comprar();
+                const novaCarta = jogador.cards[jogador.cards.length - 1]; // A última carta comprada
+                if (jogador.podeJogar(lastCard, novaCarta)) {
+                    jogador.jogar(novaCarta);
+                    if (jogador.cards.length === 0) setWinner(jogador.id);
+                    const updatedPlayers: Player[] = executaCarta(novaCarta);
+                    passaParaOProximo(updatedPlayers);
+                    setLastCard(novaCarta);
+                    temCarta = true;
+                }
+            }
+    
             await awaitForNextPlay();
         }
     }
+    
+    
 
     const compra = () => {
         if (auxPlayers[0].id === 1) {
@@ -132,8 +146,8 @@ const Uon: React.FC = () => {
     }
 
     function printCartas(cards: ICarta[]) {
-        return cards.map((carta: ICarta) => (
-            <div className="divClick" onClick={() => checaJogada(auxPlayers[0], carta)} key={carta.id}>
+        return cards.map((carta: ICarta, index) => (
+            <div className="divClick" onClick={() => checaJogada(auxPlayers[0], carta)} key={index}>
                 <Carta id={carta.id} name={carta.name} color={carta.color} power={carta.power}></Carta>
             </div>
         ));
