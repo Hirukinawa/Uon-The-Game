@@ -131,6 +131,7 @@ const Uon: React.FC = () => {
                     jogador.jogar(carta);
                     if (jogador.cards.length === 0) setWinner(jogador.id);
                     passaParaOProximo(executaCarta(carta));
+                    if (carta.color === undefined) carta.color = listaDeCores[getRandomInt(0, listaDeCores.length - 1)]
                     setLastCard(carta);
                 }
             } else {
@@ -151,7 +152,10 @@ const Uon: React.FC = () => {
         if (index !== 0) {
             return (
                 <div className="row" key={index}>
-                    <h3>Jogador {player.id} <EnemyCard /> x{player.cards.length}</h3>
+                    {window.innerWidth < 800
+                    ? <h4>{player.id} <EnemyCard /> x{player.cards.length}</h4>
+                    : <h4>Jogador {player.id} <EnemyCard /> x{player.cards.length}</h4>
+                    }
                 </div>
             );
         }
@@ -160,10 +164,6 @@ const Uon: React.FC = () => {
     function restart() {
         iniciarJogo();
     }
-
-    /* function acabar() {
-        setWinner(1);
-    } */
 
     function iniciarJogo() {
         setWinner(-1);
@@ -185,21 +185,22 @@ const Uon: React.FC = () => {
         }
     };
 
-    const ordem = auxPlayers.map((pl, index) => <h4 key={index}>{pl.id}</h4>);
+    const ordem = auxPlayers.map((pl, index) => index === nop - 1 ? <h4 key={index}>{pl.id}</h4> : <h4 style={{marginRight: "4px"}} key={index}>{`${pl.id} -`}</h4>);
 
     return (
         <div className="uon">
             {winner > 0 ? (
                 <div className="divRestart">
-                    <h1>Jogador {winner} venceu</h1>
+                    <h1>{winner > 1 ? `Jogador ${winner} venceu` : `Você venceu`}</h1>
                     <button id="buttonRestart" onClick={restart}>REINICIAR</button>
                 </div>
             ) : (
                 <div className="uon">
-                    <div className="row">
-                        <div className="column">
+                    <div id="rowOrdem" className="row">
+                        <h5>Ordem:</h5>
                             {ordem}
                         </div>
+                    <div className="row">
                         <div className="deck">
                             <Carta {...lastCard}></Carta>
                         </div>
@@ -207,11 +208,10 @@ const Uon: React.FC = () => {
                             {printaInimigos}
                         </div>
                     </div>
-                    <button onClick={compra} style={{ marginLeft: "1rem" }}>COMPRAR</button>
-                    <div className="deck">
+                    <button id="compraButton" onClick={compra} style={{ marginLeft: "1rem" }}>COMPRAR</button>
+                    <div id="yourCards" className="deck">
                         {printCartas(players[0].cards)}
                     </div>
-                    {/* <button onClick={acabar} style={{ marginLeft: "1rem" }}>Acabar</button> */}
                 </div>
             )}
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onChoice={handleModalChoice} />

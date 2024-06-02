@@ -11,7 +11,7 @@
 
 .uon > .deck {
     width: 90vw;
-    height: 14rem;
+    height: 15rem;
 }
 
 .uon > .deck .cards:hover {
@@ -56,6 +56,10 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+}
+
+#rowOrdem h5 {
+    margin-right: 4px;
 }
 
 @media (max-width: 800px) {
