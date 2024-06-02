@@ -27,3 +27,40 @@
 #enemyCards h3 {
     margin: 4px 0px;
 }
+
+#buttonRestart {
+    margin-top: 2rem;
+    padding: .5rem;
+    background-color: red;
+    border: .5rem solid yellow;
+    border-radius: 1.5rem;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    animation: growAndShrinkA 2s infinite;
+}
+
+.divRestart h1 {
+    text-transform: uppercase;
+    color: yellow;
+    text-align: center;
+    transform: rotate(-10deg);
+    text-shadow: var(--playerShadow);
+    font-size: 3rem;
+    margin-bottom: 2rem;
+}
+
+.uon .divRestart {
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+@media (max-width: 800px) {
+    .uon .divRestart {
+        width: 80vw;
+        max-height: 60vh;
+    }
+}

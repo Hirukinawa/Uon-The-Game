@@ -2,6 +2,11 @@
     --unoShadow: -2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white,
     -4px -4px 0 black, 4px -4px 0 black, -4px 4px 0 black, 4px 4px 0 black,
     -8px 8px 0px rgb(0,0,0);
+
+    --playerShadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white,
+    -2px -2px 0 black, 2px -2px 0 black, -2px 2px 0 black, 2px 2px 0 black,
+    -4px 4px 0px rgb(0,0,0);
+
     --textShadow: -.15rem -.15rem 0 black, .15rem -.15rem 0 black, -.15rem .15rem 0 black, .15rem .15rem 0 black;
 }
 
@@ -103,5 +108,33 @@
     text-shadow: -2px 2px 0px rgb(0, 0, 0);
     color: white;
     font-size: 2rem;
+}
+
+@media (max-width: 800px) {
+
+    .app h1 {
+        font-size: 7rem;
+    }
+
+    .app h2 {
+        font-size: 2rem;
+    }
+
+    .app label {
+        width: 80%;
+    }
+
+    .app label, .app input {
+        font-size: 2rem;
+        color: yellow;
+        text-shadow: var(--textShadow);
+    }
+
+    .app input {
+        margin: 0 1rem;
+        width: 3rem;
+        background-color: transparent;
+        border: none;
+    }
 }
 

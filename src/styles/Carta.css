@@ -15,7 +15,7 @@
     font-weight: bold;
     font-family: Arial, sans-serif;
     font-size: 2rem;
-    transform: rotate(-45deg);
+    transform: rotate(-30deg);
 }
 
 .cards .content {
@@ -23,9 +23,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transform: rotate(45deg);
-    width: 120%;
-    height: 120%;
+    width: 85%;
+    height: 85%;
     border-radius: 50%;
+    transform: rotate(30deg);
     border: 8px white solid;
 }

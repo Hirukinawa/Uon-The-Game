@@ -6,6 +6,7 @@ body {
 section {
     background-color: rgba(185, 41, 41, 0.514);
     min-height: 100vh;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -76,7 +76,6 @@ const Uon: React.FC = () => {
             console.log("Erro ao executar a carta", error);
             return auxPlayers;
         }
-
         return updatedPlayers;
     }
 
@@ -84,8 +83,7 @@ const Uon: React.FC = () => {
         if (auxPlayers[0].id !== 1 && auxPlayers[0].id !== 0) {
             const jogador = auxPlayers[0];
             let temCarta: boolean = false;
-    
-            // Tente encontrar uma carta que pode ser jogada
+
             for (let i = 0; i < jogador.cards.length; i++) {
                 const carta: ICarta = jogador.cards[i];
                 if (jogador.podeJogar(lastCard, carta)) {
@@ -98,26 +96,22 @@ const Uon: React.FC = () => {
                     break;
                 }
             }
-    
-            // Se nenhuma carta pode ser jogada, compre cartas até encontrar uma válida
+
             while (!temCarta) {
                 jogador.comprar();
-                const novaCarta = jogador.cards[jogador.cards.length - 1]; // A última carta comprada
+                const novaCarta = jogador.cards[jogador.cards.length - 1];
                 if (jogador.podeJogar(lastCard, novaCarta)) {
                     jogador.jogar(novaCarta);
-                    if (jogador.cards.length === 0) setWinner(jogador.id);
                     const updatedPlayers: Player[] = executaCarta(novaCarta);
                     passaParaOProximo(updatedPlayers);
                     setLastCard(novaCarta);
                     temCarta = true;
                 }
             }
-    
             await awaitForNextPlay();
+            if (jogador.cards.length === 0) setWinner(jogador.id);
         }
     }
-    
-    
 
     const compra = () => {
         if (auxPlayers[0].id === 1) {
@@ -172,7 +166,7 @@ const Uon: React.FC = () => {
     } */
 
     function iniciarJogo() {
-        setWinner(0);
+        setWinner(-1);
         const arrayDePlayers: Player[] = game.gameStart();
         setPlayers(arrayDePlayers);
         setAuxPlayers(arrayDePlayers);
@@ -196,20 +190,15 @@ const Uon: React.FC = () => {
     return (
         <div className="uon">
             {winner > 0 ? (
-                <div>
+                <div className="divRestart">
                     <h1>Jogador {winner} venceu</h1>
-                    <button onClick={restart}>Recomeçar</button>
+                    <button id="buttonRestart" onClick={restart}>REINICIAR</button>
                 </div>
             ) : (
                 <div className="uon">
                     <div className="row">
                         <div className="column">
-                            <h1>Vez do jogador {auxPlayers[0].id}</h1>
                             {ordem}
-                        </div>
-                        <div>
-                            <p>{lastCard.name}</p>
-                            <p>{lastCard.color}</p>
                         </div>
                         <div className="deck">
                             <Carta {...lastCard}></Carta>
