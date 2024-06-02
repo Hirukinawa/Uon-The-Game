@@ -1,0 +1,40 @@
+:root {
+    --unoShadow: -2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white,
+    -4px -4px 0 black, 4px -4px 0 black, -4px 4px 0 black, 4px 4px 0 black;
+}
+
+.ec {
+    align-self: flex-end;
+    display: flex inline;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 4rem;
+    height: 7rem;
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 4px rgb(231, 231, 231) solid;
+    background-color: black;
+}
+
+.ec h1 {
+    margin: 0;
+    font-size: 1.33em;
+    font-family: Arial, sans-serif;
+    color: rgb(247, 247, 27);
+    text-shadow: var(--unoShadow);
+    transform: rotate(-55deg);
+    animation: none;
+}
+
+.ec .content {
+    background-color: red;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
+    transform: rotate(30deg);
+}

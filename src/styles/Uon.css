@@ -8,3 +8,22 @@
 .uon .deck {
     width: 60vw;
 }
+
+.uon > .deck {
+    width: 90vw;
+    height: 14rem;
+}
+
+.uon > .deck .cards:hover {
+    transform: scale(1.15);
+    transition: 0.3s;
+}
+
+#enemyCards {
+    margin-top: 1rem;
+    align-items: flex-start;
+}
+
+#enemyCards h3 {
+    margin: 4px 0px;
+}

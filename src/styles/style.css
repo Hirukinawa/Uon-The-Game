@@ -13,10 +13,11 @@ section {
 
 .deck {
     display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
     flex-direction: row;
-    row-gap: 1rem;
-    column-gap: 2rem;
-    flex-wrap: wrap;
+    column-gap: .5rem;
+    flex-wrap: nowrap;
     justify-content: space-around;
     align-items: center;
 }
