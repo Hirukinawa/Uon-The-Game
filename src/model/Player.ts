@@ -15,12 +15,14 @@ export class Player {
         const newId = getRandomInt(0, baralho.length - 1);
         const newCard:ICarta = {id: baralho[newId].id, name: baralho[newId].name, color: baralho[newId].color, power: baralho[newId].power}
         this.cards.push(newCard)
-        /* this.cards.push(baralho[getRandomInt(1, baralho.length) - 1]) */
         return this.cards;
     }
 
     podeJogar(lastCard: ICarta, cartaJogador: ICarta): boolean {
-        if (cartaJogador.name === lastCard.name || cartaJogador.color === lastCard.color || cartaJogador.color === "black") {
+        if (cartaJogador.name === lastCard.name ||
+            cartaJogador.color === lastCard.color ||
+            cartaJogador.color === "black" ||
+            lastCard.color === undefined) {
             return true;
         } else {
             return false;

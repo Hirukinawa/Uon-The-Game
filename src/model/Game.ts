@@ -18,7 +18,6 @@ export class Game {
             const newNumber = getRandomInt(0, baralho.length - 1);
             const newCard:ICarta = {id: baralho[newNumber].id, name:  baralho[newNumber].name, power:  baralho[newNumber].power, color:  baralho[newNumber].color}
             cartas.push(newCard)
-            /* cartas.push(baralho[getRandomInt(1, baralho.length) - 1]); */
         }
         return cartas;
     }

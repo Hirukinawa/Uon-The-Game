@@ -185,6 +185,8 @@ const Uon: React.FC = () => {
         }
     };
 
+    if (lastCard.color === undefined && auxPlayers[0].id === 1) alert(`[ERRO] Você pode jogar qualquer carta!`)
+
     const ordem = auxPlayers.map((pl, index) => index === nop - 1 ? <h4 key={index}>{pl.id}</h4> : <h4 style={{marginRight: "4px"}} key={index}>{`${pl.id} -`}</h4>);
 
     return (
