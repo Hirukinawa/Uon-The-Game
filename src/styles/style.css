@@ -12,6 +12,10 @@ section {
     justify-content: center;
 }
 
+button {
+    cursor: pointer;
+}
+
 .deck {
     display: flex;
     overflow-x: auto;
