@@ -91,6 +91,7 @@ const Uon: React.FC = () => {
                     if (jogador.cards.length === 0) setWinner(jogador.id);
                     const updatedPlayers: Player[] = executaCarta(carta);
                     passaParaOProximo(updatedPlayers);
+                    if (carta.color === undefined) carta.color = listaDeCores[0]
                     setLastCard(carta);
                     temCarta = true;
                     break;
@@ -104,6 +105,7 @@ const Uon: React.FC = () => {
                     jogador.jogar(novaCarta);
                     const updatedPlayers: Player[] = executaCarta(novaCarta);
                     passaParaOProximo(updatedPlayers);
+                    if (novaCarta.color === undefined) novaCarta.color = listaDeCores[0]
                     setLastCard(novaCarta);
                     temCarta = true;
                 }
@@ -131,7 +133,6 @@ const Uon: React.FC = () => {
                     jogador.jogar(carta);
                     if (jogador.cards.length === 0) setWinner(jogador.id);
                     passaParaOProximo(executaCarta(carta));
-                    if (carta.color === undefined) carta.color = listaDeCores[getRandomInt(0, listaDeCores.length - 1)]
                     setLastCard(carta);
                 }
             } else {

@@ -14,6 +14,8 @@ export class Game {
 
     distribuiCartas(): ICarta[] {
         let cartas: ICarta[] = [];
+        const nC:ICarta = {id: baralho[baralho.length -1].id, name: baralho[baralho.length -1].name, color: baralho[baralho.length -1].color, power: baralho[baralho.length -1].power}
+        cartas.push(nC)
         for (let i:number = 0; i < 7; i++) {
             const newNumber = getRandomInt(0, baralho.length - 1);
             const newCard:ICarta = {id: baralho[newNumber].id, name:  baralho[newNumber].name, power:  baralho[newNumber].power, color:  baralho[newNumber].color}
