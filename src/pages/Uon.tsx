@@ -136,7 +136,7 @@ const Uon: React.FC = () => {
                     setLastCard(carta);
                 }
             } else {
-                alert(`Esta carta não pode ser jogada agora! ${carta.color} != ${lastCard.color} | ${carta.name} != ${lastCard.name}`);
+                alert(`Esta carta não pode ser jogada agora!`);
             }
         }
     }
